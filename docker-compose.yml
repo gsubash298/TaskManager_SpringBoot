@@ -1,0 +1,26 @@
+version: '1'
+services:
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    container_name: mysql-docker
+    network_mode: host
+    environment:
+	  MYSQL_DATABASE: hibernatedb
+      MYSQL_ROOT_PASSWORD: root
+  springboot-tskmgrspringboot:
+    image: gsubash298/taskmanager:springboot-tskmgrspringboot
+    restart: always
+	container_name: springboot-docker
+    network_mode: host
+    depends_on:
+      - mysql
+    ports:
+      - 8080:8080
+  angular-tskmgrfrontend1:
+    image: gsubash298/taskmanager:angular-tskmgrfrontend1
+    network_mode: host
+    container_name: angular-docker
+    ports:
+      - 4200:4200
